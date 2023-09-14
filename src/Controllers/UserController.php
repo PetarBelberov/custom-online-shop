@@ -2,15 +2,15 @@
 
 
 namespace Controllers;
-use PDO;
+use Models\User;
 
 class UserController
 {
-    private $pdo;
+    private User $userModel;
 
-    public function __construct(PDO $pdo)
+    public function __construct(User $userModel)
     {
-        $this->pdo = $pdo;
+        $this->userModel = $userModel;
     }
 
     public function home(): void
@@ -46,8 +46,11 @@ class UserController
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             // Insert the new user into the database.
-            $stmt = $this->pdo->prepare("INSERT INTO users (name, surname, email, phone, city, password) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$name, $surname, $email, $phone, $city, $hashedPassword]);
+//            $stmt = $this->pdo->prepare("INSERT INTO users (name, surname, email, phone, city, password) VALUES (?, ?, ?, ?, ?, ?)");
+//            $stmt->execute([$name, $surname, $email, $phone, $city, $hashedPassword]);
+            // Insert the new user into the database.
+            $this->userModel->setUser($name, $surname, $email, $phone, $city, $hashedPassword);
+
 
             // Redirect to the login page.
             header('Location: /login');
@@ -66,9 +69,13 @@ class UserController
             $password = $_POST['password'];
 
             // Validate the user's credentials.
-            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
-            $stmt->execute([$email]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+//            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
+//            $stmt->execute([$email]);
+//            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Validate the user's credentials.
+            $user = $this->userModel->getUser($email);
+
 
             if ($user && password_verify($password, $user['password'])) {
                 // User is authenticated, store the user's information in the session.
