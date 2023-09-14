@@ -36,18 +36,15 @@ class UserController
                 return;
             }
 
-            // Validate password and confirm password match
+            // Validate password and confirm password match.
             if ($password !== $confirmPassword) {
                 echo 'Password and confirm password do not match.';
                 return;
             }
 
-            // Hash the password
+            // Hash the password.
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            // Insert the new user into the database.
-//            $stmt = $this->pdo->prepare("INSERT INTO users (name, surname, email, phone, city, password) VALUES (?, ?, ?, ?, ?, ?)");
-//            $stmt->execute([$name, $surname, $email, $phone, $city, $hashedPassword]);
             // Insert the new user into the database.
             $this->userModel->setUser($name, $surname, $email, $phone, $city, $hashedPassword);
 
@@ -69,13 +66,7 @@ class UserController
             $password = $_POST['password'];
 
             // Validate the user's credentials.
-//            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
-//            $stmt->execute([$email]);
-//            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            // Validate the user's credentials.
             $user = $this->userModel->getUser($email);
-
 
             if ($user && password_verify($password, $user['password'])) {
                 // User is authenticated, store the user's information in the session.
@@ -90,7 +81,7 @@ class UserController
             }
         }
 
-        // Render the view to log in the user
+        // Render the view to log in the user.
         include __DIR__ . '/../templates/user/login.php';
     }
 
