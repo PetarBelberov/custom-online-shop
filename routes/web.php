@@ -1,5 +1,11 @@
 <?php
 
+// Set the session cookie lifetime to 1 hour (3600 seconds)
+session_set_cookie_params(3600);
+
+// Start a new session.
+session_start();
+
 use Controllers\UserController;
 use Models\User;
 
@@ -16,5 +22,14 @@ $routes = [
     },
     '/login' => function () use ($userController) {
         $userController->login();
+    },
+    '/edit-contact' => function () use ($userController) {
+        $userController->editContactInformation();
+    },
+    '/edit-contact-success' => function () use ($userController) {
+        $userController->editContactSuccess();
+    },
+    '/logout' => function () use ($userController) {
+        $userController->logout();
     },
 ];
