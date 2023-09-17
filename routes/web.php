@@ -29,7 +29,17 @@ $routes = [
     '/edit-contact-success' => function () use ($userController) {
         $userController->editContactSuccess();
     },
+    '/create-product' => function () use ($userController) {
+        $userController->createProduct();
+    },
+    '/product-created' => function () use ($userController) {
+        include '../src/templates/user/products/creation-success.php';
+    },
     '/logout' => function () use ($userController) {
         $userController->logout();
+    },
+    // 404 page route
+    '/404' => function () use ($userController) {
+        $userController->error404();
     },
 ];

@@ -1,6 +1,7 @@
 <?php
 
 namespace Controllers;
+use JetBrains\PhpStorm\NoReturn;
 use Models\User;
 
 // Temp
@@ -100,9 +101,8 @@ class UserController
                 // User is authenticated, store the user's information in the session.
                 $_SESSION['user'] = $user;
 
-                // Render the view for the home page with the user's info.
-                include __DIR__ . '/../templates/home.php';
-                return;
+                header('Location: /');
+                exit;
             } else {
                 echo 'Invalid email or password.';
                 return;
@@ -110,7 +110,7 @@ class UserController
         }
 
         // Render the view to log in the user.
-        include __DIR__ . '/../templates/home.php';
+        include __DIR__ . '/../templates/user/login.php';
     }
 
     public function editContactInformation(): void
@@ -166,7 +166,7 @@ class UserController
         include __DIR__ . '/../templates/user/edit-contact-success.php';
     }
 
-    public function logout(): void
+    #[NoReturn] public function logout(): void
     {
         // Clear the user's session data.
         $_SESSION = array();
@@ -177,5 +177,90 @@ class UserController
         exit;
     }
 
-    // TODO: Add other methods for, create, edit, delete unlimited items for sale after log in.
+    public function createProduct(): void
+    {
+        // Check if the user is logged in.
+        if (!isset($_SESSION['user'])) {
+            echo 'You must be logged in to create a product.';
+            return;
+        }
+
+        // Get the logged-in user's ID.
+        $userId = $_SESSION['user']['id'];
+
+        // Handle the form submission to create a product.
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Get the form data.
+            $productName = $_POST['product_name'];
+            $productDescription = $_POST['product_description'];
+            $productPublicationDate = $_POST['product_publication_date'];
+            // Handle single or multiple images.
+            $productImages = $_FILES['product_images'];
+
+            // Validate the required fields.
+            if (empty($productName) || empty($productDescription) || empty($productPublicationDate) || empty($productImages)) {
+                echo 'Product name, description, publication date, and image are mandatory fields.';
+                return;
+            }
+
+            // Save the product to the database.
+            $productImagesNames = $this->handleProductImages($productImages);
+            $this->userModel->saveProduct($userId, $productName, $productDescription, $productPublicationDate, $productImagesNames);
+
+            // Set a session variable to indicate the success status.
+            $_SESSION['productCreated'] = true;
+
+            // Redirect to a different page to prevent form resubmission.
+            header('Location: /product-created');
+            exit;
+        }
+
+        // Render the view to create a product.
+        include __DIR__ . '/../templates/user/products/create-product.php';
+    }
+
+    private function handleProductImages($productImages): array
+    {
+        $productImagesPaths = [];
+
+        // Check if any images were uploaded.
+        if (!empty($productImages['name'][0])) {
+            $totalImages = count($productImages['name']);
+
+            // Loop through each uploaded image.
+            for ($i = 0; $i < $totalImages; $i++) {
+                $tmpFilePath = $productImages['tmp_name'][$i];
+                $fileName = $productImages['name'][$i];
+
+                // Validate the image file if required.
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+                $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+                if (!in_array($fileExtension, $allowedExtensions)) {
+                    echo 'Invalid file type. Only JPG, JPEG, PNG, and WEBP files are allowed.';
+                    return [];
+                }
+
+                // Sanitize the file name.
+                $sanitizedFileName = uniqid() . '_' . filter_var($fileName, FILTER_SANITIZE_SPECIAL_CHARS);
+
+                // Move the uploaded image to a desired directory.
+                $destination = $_SERVER['DOCUMENT_ROOT'] . '/../public/assets/images/' . $sanitizedFileName;
+                move_uploaded_file($tmpFilePath, $destination);
+
+                // Store the image path in the array.
+                $productImagesPaths[] = $sanitizedFileName;
+            }
+        }
+
+        return $productImagesPaths;
+    }
+
+    public function error404(): void
+    {
+        // Render the 404 error page.
+        include __DIR__ . '/../templates/error/404.php';
+    }
+
+    // TODO: Add other methods for, edit, delete unlimited items for sale after log in.
 }

@@ -1,8 +1,3 @@
-<?php
-// Receive the $user variable as a parameter.
-//$user = $_GET['user'];
-?>
-
 <h2>Edit Contact Information</h2>
 
 <form action="/edit-contact" method="POST">

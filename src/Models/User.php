@@ -38,4 +38,14 @@ class User
         $stmt->execute([$name, $surname, $email, $phone, $city, $id]);
     }
 
+    public function saveProduct($userId, $productName, $productDescription, $productPublicationDate, $productImages): void
+    {
+        // Serialize the $productImages array into a JSON string representation.
+        $productImagesJson = json_encode($productImages);
+
+        // Insert the product into the database.
+        $stmt = $this->pdo->prepare("INSERT INTO products (user_id, name, description, publication_date, image_path) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$userId, $productName, $productDescription, $productPublicationDate, $productImagesJson]);
+
+    }
 }
