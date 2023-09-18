@@ -2,18 +2,22 @@
 
 // PSR-4 autoloading standard - consistent directory structure and namespace convention.
 spl_autoload_register(function ($className) {
-    $prefix = 'Models\\';
-    $baseDir = __DIR__ . '/src/Models/';
-    $len = strlen($prefix);
-    // Handles class files within the specified Models namespace.
-    if (strncmp($prefix, $className, $len) !== 0) {
-        return;
-    }
+    $prefixes = [
+        'Models\\' => __DIR__ . '/src/Models/',
+        'Controllers\\' => __DIR__ . '/src/Controllers/'
+    ];
 
-    $relativeClass = substr($className, $len);
-    // Full file path for the class file.
-    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
-    if (file_exists($file)) {
-        require $file;
+    foreach ($prefixes as $prefix => $baseDir) {
+        $len = strlen($prefix);
+        if (strncmp($prefix, $className, $len) !== 0) {
+            continue;
+        }
+
+        $relativeClass = substr($className, $len);
+        $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+        if (file_exists($file)) {
+            require $file;
+            return;
+        }
     }
 });

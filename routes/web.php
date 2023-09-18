@@ -7,15 +7,22 @@ session_set_cookie_params(3600);
 session_start();
 
 use Controllers\UserController;
+use Controllers\ProductController;
+use Controllers\HomeController;
 use Models\User;
+
+// Create an instance of the User model.
+$userModel = (!empty($pdo) ? new User($pdo) : null);
 
 // Create an instance of the Controllers\UserController and pass the PDO object if it exists.
 $userController = (!empty($pdo) ? new UserController(new User($pdo)) : null);
+$productController = (!empty($userModel) ? new ProductController($userModel) : null);
+$homeController = (!empty($userModel) ? new HomeController() : null);
 
 // Define the routes and their actions.
 $routes = [
-    '/' => function () use ($userController) {
-        $userController->home();
+    '/' => function () use ($homeController) {
+        $homeController->home();
     },
     '/register' => function () use ($userController) {
         $userController->register();
@@ -29,17 +36,17 @@ $routes = [
     '/edit-contact-success' => function () use ($userController) {
         $userController->editContactSuccess();
     },
-    '/create-product' => function () use ($userController) {
-        $userController->createProduct();
+    '/create-product' => function () use ($productController) {
+        $productController->createProduct();
     },
-    '/product-created' => function () use ($userController) {
+    '/product-created' => function () use ($productController) {
         include '../src/templates/user/products/creation-success.php';
     },
     '/logout' => function () use ($userController) {
         $userController->logout();
     },
     // 404 page route
-    '/404' => function () use ($userController) {
-        $userController->error404();
+    '/404' => function () use ($homeController) {
+        $homeController->error404();
     },
 ];
