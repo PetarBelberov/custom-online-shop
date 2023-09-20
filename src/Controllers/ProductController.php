@@ -54,6 +54,109 @@ class ProductController
         include __DIR__ . '/../templates/user/products/create-product.php';
     }
 
+    public function editProduct(): void
+    {
+        // Check if the user is logged in.
+        if (!isset($_SESSION['user'])) {
+            echo 'You must be logged in to edit a product.';
+            return;
+        }
+
+        // Get the logged-in user's ID.
+        $userId = $_SESSION['user']['id'];
+
+        // Get the product ID from the request.
+        $productId = $_GET['id'] ?? null;
+
+        // Check if the product ID is provided.
+        if (!$productId) {
+            echo 'Product ID is missing.';
+            return;
+        }
+
+        // Get the product details from the database.
+        $product = $this->userModel->getProductById($productId);
+
+        // Check if the product exists and belongs to the logged-in user.
+        if (!$product || $product['user_id'] !== $userId) {
+            echo 'Product not found or you do not have permission to edit it.';
+            return;
+        }
+
+        // Handle the form submission to update the product.
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Get the form data.
+            $productName = $_POST['product_name'];
+            $productDescription = $_POST['product_description'];
+            $productPublicationDate = $_POST['product_publication_date'];
+            // Handle single or multiple images.
+            $productImages = $_FILES['product_images'];
+            $uploadedImagesLength = strlen($productImages['name'][0]);
+
+            // Validate the required fields.
+            if (empty($productName) || empty($productDescription) || empty($productPublicationDate) || $uploadedImagesLength === 0) {
+                echo 'Product name, description, publication date are mandatory fields.';
+                return;
+            }
+
+            // Get the existing image names from the database.
+            $existingImages = json_decode($product['image_path'], true);
+
+            // Remove the keys from the existing images array.
+            $existingImages = array_values($existingImages);
+
+            // Check if new images were uploaded.
+            if (!empty($productImages['name'][0])) {
+                // Handle the new images and merge them with the existing images.
+                $newImages = $this->handleProductImages($productImages);
+                $productImagesNames = array_merge($existingImages, $newImages);
+            } else {
+                // No new images were uploaded, keep the existing images.
+                $productImagesNames = $existingImages;
+            }
+
+            // Remove selected images from the database.
+            if (isset($_POST['remove_images'])) {
+                $selectedImages = $_POST['remove_images'];
+                foreach ($selectedImages as $selectedImage) {
+                    // Remove the selected image from the array of image names.
+                    $key = array_search($selectedImage, $productImagesNames);
+                    if ($key !== false) {
+                        unset($productImagesNames[$key]);
+                    }
+                }
+            }
+
+            // Save the updated product details to the database.
+            $this->userModel->updateProduct($productId, $productName, $productDescription, $productPublicationDate, $productImagesNames);
+
+            // Set a session variable to indicate the success status.
+            $_SESSION['editProductSuccess'] = true;
+
+            // Redirect to a different page to prevent form resubmission.
+            header('Location: /edit-product-success');
+            exit;
+        }
+
+        // Render the view to edit the product.
+        include __DIR__ . '/../templates/user/products/edit-product.php';
+    }
+
+    public function editProductSuccess(): void
+    {
+        // Check if the editContactSuccess session variable is set to true.
+        if (!isset($_SESSION['editProductSuccess']) || !$_SESSION['editProductSuccess']) {
+            header('Location: /');
+            exit;
+        }
+
+        // Unset the editContactSuccess session variable.
+        unset($_SESSION['editProductSuccess']);
+
+        // Render the view for the edit contact success page.
+        include __DIR__ . '/../templates/user/products/edit-product-success.php';
+    }
+
     private function handleProductImages($productImages): array
     {
         $productImagesPaths = [];
@@ -90,5 +193,7 @@ class ProductController
 
         return $productImagesPaths;
     }
+
+    // TODO: Add other methods for, edit, delete unlimited items for sale after log in.
 
 }

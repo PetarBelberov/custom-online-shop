@@ -18,6 +18,8 @@ $userModel = (!empty($pdo) ? new User($pdo) : null);
 $userController = (!empty($pdo) ? new UserController(new User($pdo)) : null);
 $productController = (!empty($userModel) ? new ProductController($userModel) : null);
 $homeController = (!empty($userModel) ? new HomeController() : null);
+// Get the product ID from the request query parameters.
+$productId = $_GET['id'] ?? null;
 
 // Define the routes and their actions.
 $routes = [
@@ -41,6 +43,19 @@ $routes = [
     },
     '/product-created' => function () use ($productController) {
         include '../src/templates/user/products/creation-success.php';
+    },
+    '/edit-product?id=' . $productId => function () use ($productController) {
+        // Check if the product ID is provided.
+        if (!$_GET['id']) {
+            echo 'Product ID is missing.';
+            return;
+        }
+
+        // Call the editProduct() method with the product ID.
+        $productController->editProduct();
+    },
+    '/edit-product-success' => function () use ($productController) {
+        $productController->editProductSuccess();
     },
     '/logout' => function () use ($userController) {
         $userController->logout();

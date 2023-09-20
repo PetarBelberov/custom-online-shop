@@ -1,13 +1,3 @@
-<?php
-// Check if the productCreated session variable is set to true
-//if (isset($_SESSION['productCreated']) && $_SESSION['productCreated']) {
-//    // Modify the session variable to false
-//    $_SESSION['productCreated'] = false;
-//
-//    // Include the success message template
-//    include __DIR__ . '/creation-success.php';
-//}
-?>
 <h2>Create Product</h2>
 
 <form action="/create-product" method="POST" enctype="multipart/form-data">

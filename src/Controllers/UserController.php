@@ -161,6 +161,4 @@ class UserController
         header('Location: /login');
         exit;
     }
-
-    // TODO: Add other methods for, edit, delete unlimited items for sale after log in.
 }
