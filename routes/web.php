@@ -20,7 +20,8 @@ $productModel = (!empty($pdo) ? new Product($pdo) : null);
 // Create an instance of the Controllers\UserController and pass the PDO object if it exists.
 $userController = (!empty($pdo) ? new UserController(new User($pdo)) : null);
 $productController = (!empty($productModel) ? new ProductController($productModel) : null);
-$homeController = (!empty($userModel) ? new HomeController() : null);
+$homeController = (!empty($userModel) ? new HomeController($productModel) : null);
+
 // Get the product ID from the request query parameters.
 $productId = $_GET['id'] ?? null;
 

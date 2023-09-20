@@ -12,6 +12,13 @@ class Product
         $this->pdo = $pdo;
     }
 
+    public function getAllProducts(): bool|array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM products");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function saveProduct($userId, $productName, $productDescription, $productPublicationDate, $productImages): void
     {
         // Serialize the $productImages array into a JSON string representation.
