@@ -65,4 +65,10 @@ class User
         $stmt = $this->pdo->prepare("UPDATE products SET name = ?, description = ?, publication_date = ?, image_path = ? WHERE id = ?");
         $stmt->execute([$productName, $productDescription, $productPublicationDate, $productImagesJson, $productId]);
     }
+
+    public function deleteProduct($productId): void
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM products WHERE id = ?");
+        $stmt->execute([$productId]);
+    }
 }

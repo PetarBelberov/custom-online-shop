@@ -93,17 +93,28 @@ class ProductController
             $productImages = $_FILES['product_images'];
             $uploadedImagesLength = strlen($productImages['name'][0]);
 
-            // Validate the required fields.
-            if (empty($productName) || empty($productDescription) || empty($productPublicationDate) || $uploadedImagesLength === 0) {
-                echo 'Product name, description, publication date are mandatory fields.';
-                return;
-            }
-
             // Get the existing image names from the database.
             $existingImages = json_decode($product['image_path'], true);
 
             // Remove the keys from the existing images array.
             $existingImages = array_values($existingImages);
+
+            // Check if there is only one image left and no new images were uploaded.
+            if (count($existingImages) === 1 && empty($_FILES['product_images']['name'][0])) {
+                echo 'Cannot delete the last image. A product must have at least one image.';
+                return;
+            }
+
+            // Validate the required fields.
+            if (empty($productName) ||
+                empty($productDescription) ||
+                empty($productPublicationDate) ||
+                ($uploadedImagesLength === 0 &&
+                empty($existingImages))) {
+
+                echo 'Product name, description, publication date are mandatory fields.';
+                return;
+            }
 
             // Check if new images were uploaded.
             if (!empty($productImages['name'][0])) {
@@ -194,6 +205,104 @@ class ProductController
         return $productImagesPaths;
     }
 
-    // TODO: Add other methods for, edit, delete unlimited items for sale after log in.
+    public function deleteProduct(): void
+    {
+        // Check if the user is logged in.
+        if (!isset($_SESSION['user'])) {
+            echo 'You must be logged in to delete a product.';
+            return;
+        }
 
+        // Get the logged-in user's ID.
+        $userId = $_SESSION['user']['id'];
+
+        // Check if the confirmation form is submitted.
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
+            $confirm = $_POST['confirm'];
+
+            // Get the product ID from the request.
+            $productId = $_POST['product_id'] ?? null;
+
+            // Check if the product ID is provided.
+            if (!$productId) {
+                echo 'Product ID is missing.';
+                return;
+            }
+
+            // Get the product details from the database.
+            $product = $this->userModel->getProductById($productId);
+
+            // Check if the product exists and belongs to the logged-in user.
+            if (!$product || $product['user_id'] !== $userId) {
+                echo 'Product not found or you do not have permission to delete it.';
+                return;
+            }
+
+            if ($confirm === 'yes') {
+                // Delete the product from the database.
+                $this->userModel->deleteProduct($productId);
+
+                // Set a session variable to indicate the success status.
+                $_SESSION['deleteProductSuccess'] = true;
+
+                // Redirect to a different page to prevent form resubmission.
+                header('Location: /delete-product-success');
+            } else {
+                // Redirect to the product details page or any other appropriate page.
+                header('Location: /product-details?id=' . $productId);
+            }
+            exit;
+        } else {
+            // Get the product ID from the request.
+            $productId = $_GET['id'] ?? null;
+
+            // Check if the product ID is provided.
+            if (!$productId) {
+                echo 'Product ID is missing.';
+                return;
+            }
+
+            // Get the product details from the database.
+            $product = $this->userModel->getProductById($productId);
+
+            // Check if the product exists and belongs to the logged-in user.
+            if (!$product || $product['user_id'] !== $userId) {
+                echo 'Product not found or you do not have permission to delete it.';
+                return;
+            }
+
+            // Render the confirmation view.
+            include __DIR__ . '/../templates/user/products/delete-product-confirm.php';
+        }
+    }
+
+    public function deleteProductConfirm($productId): void
+    {
+        // Get the product details from the database.
+        $product = $this->userModel->getProductById($productId);
+
+        // Check if the product exists.
+        if (!$product) {
+            echo 'Product not found.';
+            return;
+        }
+
+        // Render the confirmation view.
+        include __DIR__ . '/../templates/user/products/delete-product-confirm.php';
+    }
+
+    public function deleteProductSuccess(): void
+    {
+        // Check if the editContactSuccess session variable is set to true.
+        if (!isset($_SESSION['deleteProductSuccess']) || !$_SESSION['deleteProductSuccess']) {
+            header('Location: /');
+            exit;
+        }
+
+        // Unset the editContactSuccess session variable.
+        unset($_SESSION['deleteProductSuccess']);
+
+        // Render the view for the edit contact success page.
+        include __DIR__ . '/../templates/user/products/delete-product-success.php';
+    }
 }

@@ -57,6 +57,22 @@ $routes = [
     '/edit-product-success' => function () use ($productController) {
         $productController->editProductSuccess();
     },
+    '/delete-product-confirm?id=' . $productId => function () use ($productController, $productId) {
+        // Check if the product ID is provided.
+        if (!$productId) {
+            echo 'Product ID is missing.';
+            return;
+        }
+
+        // Call the deleteProductConfirm() method with the product ID.
+        $productController->deleteProductConfirm($productId);
+    },
+    '/delete-product' => function () use ($productController) {
+        $productController->deleteProduct();
+    },
+    '/delete-product-success' => function () use ($productController) {
+        $productController->deleteProductSuccess();
+    },
     '/logout' => function () use ($userController) {
         $userController->logout();
     },
