@@ -1,7 +1,5 @@
 <?php
 
-use Controllers\UserController;
-
 require_once __DIR__ . '/../autoload.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../src/Controllers/UserController.php';
@@ -17,10 +15,11 @@ try {
     if (isset($routes[$requestUri])) {
         $routes[$requestUri]();
     } else {
-        // Handle other routes or show a 404 page.
-        echo '404 - Page not found';
+        // Redirect to the custom 404 page.
+        header('Location: /404');
+        exit;
     }
 } catch (Exception $e) {
-    // Handle any exceptions
+    // Handle any exceptions.
     echo 'Error: ' . $e->getMessage();
 }

@@ -50,14 +50,16 @@ class UserController
             // Insert the new user into the database.
             $this->userModel->setUser($name, $surname, $email, $phone, $city, $hashedPassword);
 
-
             // Redirect to the login page.
             header('Location: /login');
             exit;
         }
 
+        // Render the view with the header and footer included.
+        include __DIR__ . '/../templates/header.php';
         // Render the view to register a new user.
         include __DIR__ . '/../templates/user/register.php';
+        include __DIR__ . '/../templates/footer.php';
     }
 
     public function login(): void
@@ -89,8 +91,11 @@ class UserController
             }
         }
 
+        // Render the view with the header and footer included.
+        include __DIR__ . '/../templates/header.php';
         // Render the view to log in the user.
         include __DIR__ . '/../templates/user/login.php';
+        include __DIR__ . '/../templates/footer.php';
     }
 
     public function editContactInformation(): void
@@ -127,8 +132,11 @@ class UserController
         // Get the current contact information of the user.
         $user = $this->userModel->getUserById($userId);
 
+        // Render the view with the header and footer included.
+        include __DIR__ . '/../templates/header.php';
         // Render the view to edit contact information.
         include __DIR__ . '/../templates/user/edit-contact.php';
+        include __DIR__ . '/../templates/footer.php';
     }
 
     public function editContactSuccess(): void
@@ -142,8 +150,11 @@ class UserController
         // Unset the editContactSuccess session variable.
         unset($_SESSION['editContactSuccess']);
 
+        // Render the view with the header and footer included.
+        include __DIR__ . '/../templates/header.php';
         // Render the view for the edit contact success page.
         include __DIR__ . '/../templates/user/edit-contact-success.php';
+        include __DIR__ . '/../templates/footer.php';
     }
 
     #[NoReturn] public function logout(): void

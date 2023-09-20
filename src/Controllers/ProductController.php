@@ -50,8 +50,11 @@ class ProductController
             exit;
         }
 
+        // Render the view with the header and footer included.
+        include __DIR__ . '/../templates/header.php';
         // Render the view to create a product.
         include __DIR__ . '/../templates/user/products/create-product.php';
+        include __DIR__ . '/../templates/footer.php';
     }
 
     public function createProductSuccess(): void
@@ -65,8 +68,11 @@ class ProductController
         // Unset the editContactSuccess session variable.
         unset($_SESSION['createProductSuccess']);
 
+        // Render the view with the header and footer included.
+        include __DIR__ . '/../templates/header.php';
         // Render the view for the edit contact success page.
         include __DIR__ . '/../templates/user/products/create-product-success.php';
+        include __DIR__ . '/../templates/footer.php';
     }
 
     public function editProduct(): void
@@ -164,8 +170,10 @@ class ProductController
             exit;
         }
 
+        include __DIR__ . '/../templates/header.php';
         // Render the view to edit the product.
         include __DIR__ . '/../templates/user/products/edit-product.php';
+        include __DIR__ . '/../templates/footer.php';
     }
 
     public function editProductSuccess(): void
@@ -179,8 +187,12 @@ class ProductController
         // Unset the editContactSuccess session variable.
         unset($_SESSION['editProductSuccess']);
 
+        // Render the view with the header and footer included.
+        include __DIR__ . '/../templates/header.php';
         // Render the view for the edit contact success page.
         include __DIR__ . '/../templates/user/products/edit-product-success.php';
+        include __DIR__ . '/../templates/footer.php';
+
     }
 
     private function handleProductImages($productImages): array
@@ -286,8 +298,11 @@ class ProductController
                 return;
             }
 
+            // Render the view with the header and footer included.
+            include __DIR__ . '/../templates/header.php';
             // Render the confirmation view.
             include __DIR__ . '/../templates/user/products/delete-product-confirm.php';
+            include __DIR__ . '/../templates/footer.php';
         }
     }
 
@@ -302,8 +317,11 @@ class ProductController
             return;
         }
 
+        // Render the view with the header and footer included.
+        include __DIR__ . '/../templates/header.php';
         // Render the confirmation view.
         include __DIR__ . '/../templates/user/products/delete-product-confirm.php';
+        include __DIR__ . '/../templates/footer.php';
     }
 
     public function deleteProductSuccess(): void
@@ -317,7 +335,10 @@ class ProductController
         // Unset the editContactSuccess session variable.
         unset($_SESSION['deleteProductSuccess']);
 
+        // Render the view with the header and footer included.
+        include __DIR__ . '/../templates/header.php';
         // Render the view for the edit contact success page.
         include __DIR__ . '/../templates/user/products/delete-product-success.php';
+        include __DIR__ . '/../templates/footer.php';
     }
 }
