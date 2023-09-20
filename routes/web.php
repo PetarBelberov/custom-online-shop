@@ -9,14 +9,17 @@ session_start();
 use Controllers\UserController;
 use Controllers\ProductController;
 use Controllers\HomeController;
+use Models\Product;
 use Models\User;
 
-// Create an instance of the User model.
+// Create an instances of the User and Product models.
 $userModel = (!empty($pdo) ? new User($pdo) : null);
+$productModel = (!empty($pdo) ? new Product($pdo) : null);
+
 
 // Create an instance of the Controllers\UserController and pass the PDO object if it exists.
 $userController = (!empty($pdo) ? new UserController(new User($pdo)) : null);
-$productController = (!empty($userModel) ? new ProductController($userModel) : null);
+$productController = (!empty($productModel) ? new ProductController($productModel) : null);
 $homeController = (!empty($userModel) ? new HomeController() : null);
 // Get the product ID from the request query parameters.
 $productId = $_GET['id'] ?? null;

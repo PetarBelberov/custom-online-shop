@@ -1,15 +1,15 @@
 <?php
 namespace Controllers;
 
-use Models\User;
+use Models\Product;
 
 class ProductController
 {
-    private User $userModel;
+    private Product $productModel;
 
-    public function __construct(User $userModel)
+    public function __construct(Product $productModel)
     {
-        $this->userModel = $userModel;
+        $this->productModel = $productModel;
     }
 
     public function createProduct(): void
@@ -40,7 +40,7 @@ class ProductController
 
             // Save the product to the database.
             $productImagesNames = $this->handleProductImages($productImages);
-            $this->userModel->saveProduct($userId, $productName, $productDescription, $productPublicationDate, $productImagesNames);
+            $this->productModel->saveProduct($userId, $productName, $productDescription, $productPublicationDate, $productImagesNames);
 
             // Set a session variable to indicate the success status.
             $_SESSION['productCreated'] = true;
@@ -75,7 +75,7 @@ class ProductController
         }
 
         // Get the product details from the database.
-        $product = $this->userModel->getProductById($productId);
+        $product = $this->productModel->getProductById($productId);
 
         // Check if the product exists and belongs to the logged-in user.
         if (!$product || $product['user_id'] !== $userId) {
@@ -139,7 +139,7 @@ class ProductController
             }
 
             // Save the updated product details to the database.
-            $this->userModel->updateProduct($productId, $productName, $productDescription, $productPublicationDate, $productImagesNames);
+            $this->productModel->updateProduct($productId, $productName, $productDescription, $productPublicationDate, $productImagesNames);
 
             // Set a session variable to indicate the success status.
             $_SESSION['editProductSuccess'] = true;
@@ -230,7 +230,7 @@ class ProductController
             }
 
             // Get the product details from the database.
-            $product = $this->userModel->getProductById($productId);
+            $product = $this->productModel->getProductById($productId);
 
             // Check if the product exists and belongs to the logged-in user.
             if (!$product || $product['user_id'] !== $userId) {
@@ -240,7 +240,7 @@ class ProductController
 
             if ($confirm === 'yes') {
                 // Delete the product from the database.
-                $this->userModel->deleteProduct($productId);
+                $this->productModel->deleteProduct($productId);
 
                 // Set a session variable to indicate the success status.
                 $_SESSION['deleteProductSuccess'] = true;
@@ -263,7 +263,7 @@ class ProductController
             }
 
             // Get the product details from the database.
-            $product = $this->userModel->getProductById($productId);
+            $product = $this->productModel->getProductById($productId);
 
             // Check if the product exists and belongs to the logged-in user.
             if (!$product || $product['user_id'] !== $userId) {
@@ -279,7 +279,7 @@ class ProductController
     public function deleteProductConfirm($productId): void
     {
         // Get the product details from the database.
-        $product = $this->userModel->getProductById($productId);
+        $product = $this->productModel->getProductById($productId);
 
         // Check if the product exists.
         if (!$product) {
