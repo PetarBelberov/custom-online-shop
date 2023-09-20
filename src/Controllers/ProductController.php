@@ -43,15 +43,30 @@ class ProductController
             $this->productModel->saveProduct($userId, $productName, $productDescription, $productPublicationDate, $productImagesNames);
 
             // Set a session variable to indicate the success status.
-            $_SESSION['productCreated'] = true;
+            $_SESSION['createProductSuccess'] = true;
 
             // Redirect to a different page to prevent form resubmission.
-            header('Location: /product-created');
+            header('Location: /create-product-success');
             exit;
         }
 
         // Render the view to create a product.
         include __DIR__ . '/../templates/user/products/create-product.php';
+    }
+
+    public function createProductSuccess(): void
+    {
+        // Check if the editContactSuccess session variable is set to true.
+        if (!isset($_SESSION['createProductSuccess']) || !$_SESSION['createProductSuccess']) {
+            header('Location: /');
+            exit;
+        }
+
+        // Unset the editContactSuccess session variable.
+        unset($_SESSION['createProductSuccess']);
+
+        // Render the view for the edit contact success page.
+        include __DIR__ . '/../templates/user/products/create-product-success.php';
     }
 
     public function editProduct(): void

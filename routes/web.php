@@ -45,8 +45,11 @@ $routes = [
     '/create-product' => function () use ($productController) {
         $productController->createProduct();
     },
+    '/create-product-success' => function () use ($productController) {
+        $productController->createProductSuccess();
+    },
     '/product-created' => function () use ($productController) {
-        include '../src/templates/user/products/creation-success.php';
+        include '../src/templates/user/products/create-product-success.php';
     },
     '/edit-product?id=' . $productId => function () use ($productController) {
         // Check if the product ID is provided.

@@ -14,13 +14,16 @@
     <!-- Additional content for non-logged-in users -->
 <?php endif; ?>
 
-<h2>Products</h2>
-<?php foreach ($products as $product): ?>
-    <div>
-        <h3><?php echo $product['name']; ?></h3>
-        <p><?php echo $product['description']; ?></p>
-        <!-- Display other product details as needed -->
-    </div>
-<?php endforeach; ?>
+<?php if (isset($products)): ?>
+    <h2>Products</h2>
+    <?php foreach ($products as $product): ?>
+        <div>
+            <h3><?php echo $product['name']; ?></h3>
+            <p><?php echo $product['description']; ?></p>
+            <!-- Display other product details as needed -->
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+
 </body>
 </html>
