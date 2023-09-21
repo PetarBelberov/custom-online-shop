@@ -2,7 +2,6 @@
     <html>
         <head>
             <title>INDEAVR Online Shop</title>
-            <!-- CSS and other header content here -->
         </head>
         <body>
             <header>
@@ -15,13 +14,11 @@
                         <?php else: ?>
                             <li>
                                 <a href="/login">Log In</a>
-                                <!-- Additional content for non-logged-in users -->
                             </li>
                         <?php endif; ?>
                         <li>
                             <a href="/">Home</a>
                         </li>
-                        <!-- Navigation links as needed -->
                     </ul>
                 </nav>
             </header>

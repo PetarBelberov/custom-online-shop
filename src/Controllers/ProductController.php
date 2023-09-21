@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 
+use Helpers\FlashMessageHelper;
 use Models\Product;
 
 class ProductController
@@ -16,8 +17,9 @@ class ProductController
     {
         // Check if the user is logged in.
         if (!isset($_SESSION['user'])) {
-            echo 'You must be logged in to create a product.';
-            return;
+            FlashMessageHelper::setFlashMessage('error', 'You must be logged in to create a product.');
+            header('Location: /');
+            exit;
         }
 
         // Get the logged-in user's ID.
@@ -31,11 +33,16 @@ class ProductController
             $productPublicationDate = $_POST['product_publication_date'];
             // Handle single or multiple images.
             $productImages = $_FILES['product_images'];
+            $uploadedImagesLength = strlen($productImages['name'][0]);
 
             // Validate the required fields.
-            if (empty($productName) || empty($productDescription) || empty($productPublicationDate) || empty($productImages)) {
-                echo 'Product name, description, publication date, and image are mandatory fields.';
-                return;
+            if (empty($productName) ||
+                empty($productDescription) ||
+                empty($productPublicationDate) ||
+                ($uploadedImagesLength === 0)) {
+                FlashMessageHelper::setFlashMessage('error', 'Product name, description, publication date, and image are mandatory fields.');
+                header('Location: /create-product');
+                exit;
             }
 
             // Save the product to the database.
@@ -52,6 +59,7 @@ class ProductController
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/../partials/flash-message.php';
         // Render the view to create a product.
         include __DIR__ . '/../templates/user/products/create-product.php';
         include __DIR__ . '/../templates/footer.php';
@@ -79,8 +87,9 @@ class ProductController
     {
         // Check if the user is logged in.
         if (!isset($_SESSION['user'])) {
-            echo 'You must be logged in to edit a product.';
-            return;
+            FlashMessageHelper::setFlashMessage('error', 'You must be logged in to edit a product.');
+            header('Location: /');
+            exit;
         }
 
         // Get the logged-in user's ID.
@@ -91,8 +100,9 @@ class ProductController
 
         // Check if the product ID is provided.
         if (!$productId) {
-            echo 'Product ID is missing.';
-            return;
+            FlashMessageHelper::setFlashMessage('error', 'Product ID is missing.');
+            header('Location: /');
+            exit;
         }
 
         // Get the product details from the database.
@@ -100,8 +110,8 @@ class ProductController
 
         // Check if the product exists and belongs to the logged-in user.
         if (!$product || $product['user_id'] !== $userId) {
-            echo 'Product not found or you do not have permission to edit it.';
-            return;
+            header('Location: /404');
+            exit;
         }
 
         // Handle the form submission to update the product.
@@ -122,8 +132,9 @@ class ProductController
 
             // Check if there is only one image left and no new images were uploaded.
             if (count($existingImages) === 1 && empty($_FILES['product_images']['name'][0])) {
-                echo 'Cannot delete the last image. A product must have at least one image.';
-                return;
+                FlashMessageHelper::setFlashMessage('error', 'Cannot delete the last image. A product must have at least one image.');
+                header('Location: /edit-product?id=' . $productId);
+                exit;
             }
 
             // Validate the required fields.
@@ -133,8 +144,9 @@ class ProductController
                 ($uploadedImagesLength === 0 &&
                 empty($existingImages))) {
 
-                echo 'Product name, description, publication date are mandatory fields.';
-                return;
+                FlashMessageHelper::setFlashMessage('error', 'Product name, description, publication date, and image are mandatory fields.');
+                header('Location: /edit-product?id=' . $productId);
+                exit;
             }
 
             // Check if new images were uploaded.
@@ -171,6 +183,7 @@ class ProductController
         }
 
         include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/../partials/flash-message.php';
         // Render the view to edit the product.
         include __DIR__ . '/../templates/user/products/edit-product.php';
         include __DIR__ . '/../templates/footer.php';
@@ -213,8 +226,9 @@ class ProductController
                 $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
                 if (!in_array($fileExtension, $allowedExtensions)) {
-                    echo 'Invalid file type. Only JPG, JPEG, PNG, and WEBP files are allowed.';
-                    return [];
+                    FlashMessageHelper::setFlashMessage('error', 'Invalid file type. Only JPG, JPEG, PNG, and WEBP files are allowed.');
+                    header('Location: /create-product');
+                    exit;
                 }
 
                 // Sanitize the file name.
@@ -236,8 +250,9 @@ class ProductController
     {
         // Check if the user is logged in.
         if (!isset($_SESSION['user'])) {
-            echo 'You must be logged in to delete a product.';
-            return;
+            FlashMessageHelper::setFlashMessage('error', 'You must be logged in to delete a product.');
+            header('Location: /');
+            exit;
         }
 
         // Get the logged-in user's ID.
@@ -252,8 +267,9 @@ class ProductController
 
             // Check if the product ID is provided.
             if (!$productId) {
-                echo 'Product ID is missing.';
-                return;
+                FlashMessageHelper::setFlashMessage('error', 'Product ID is missing.');
+                header('Location: /');
+                exit;
             }
 
             // Get the product details from the database.
@@ -261,8 +277,8 @@ class ProductController
 
             // Check if the product exists and belongs to the logged-in user.
             if (!$product || $product['user_id'] !== $userId) {
-                echo 'Product not found or you do not have permission to delete it.';
-                return;
+                header('Location: /404');
+                exit;
             }
 
             if ($confirm === 'yes') {
@@ -285,8 +301,9 @@ class ProductController
 
             // Check if the product ID is provided.
             if (!$productId) {
-                echo 'Product ID is missing.';
-                return;
+                FlashMessageHelper::setFlashMessage('error', 'Product ID is missing.');
+                header('Location: /');
+                exit;
             }
 
             // Get the product details from the database.
@@ -294,8 +311,8 @@ class ProductController
 
             // Check if the product exists and belongs to the logged-in user.
             if (!$product || $product['user_id'] !== $userId) {
-                echo 'Product not found or you do not have permission to delete it.';
-                return;
+                header('Location: /404');
+                exit;
             }
 
             // Render the view with the header and footer included.
@@ -313,8 +330,8 @@ class ProductController
 
         // Check if the product exists.
         if (!$product) {
-            echo 'Product not found.';
-            return;
+            header('Location: /404');
+            exit;
         }
 
         // Render the view with the header and footer included.

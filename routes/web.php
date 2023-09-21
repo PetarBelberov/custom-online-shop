@@ -11,6 +11,7 @@ use Controllers\ProductController;
 use Controllers\HomeController;
 use Models\Product;
 use Models\User;
+use Helpers\FlashMessageHelper;
 
 // Create an instances of the User and Product models.
 $userModel = (!empty($pdo) ? new User($pdo) : null);
@@ -54,8 +55,9 @@ $routes = [
     '/edit-product?id=' . $productId => function () use ($productController) {
         // Check if the product ID is provided.
         if (!$_GET['id']) {
-            echo 'Product ID is missing.';
-            return;
+            FlashMessageHelper::setFlashMessage('error', 'Product ID is missing.');
+            header('Location: /');
+            exit;
         }
 
         // Call the editProduct() method with the product ID.
@@ -67,8 +69,9 @@ $routes = [
     '/delete-product-confirm?id=' . $productId => function () use ($productController, $productId) {
         // Check if the product ID is provided.
         if (!$productId) {
-            echo 'Product ID is missing.';
-            return;
+            FlashMessageHelper::setFlashMessage('error', 'Product ID is missing.');
+            header('Location: /');
+            exit;
         }
 
         // Call the deleteProductConfirm() method with the product ID.

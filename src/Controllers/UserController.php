@@ -1,6 +1,7 @@
 <?php
 
 namespace Controllers;
+use Helpers\FlashMessageHelper;
 use JetBrains\PhpStorm\NoReturn;
 use Models\User;
 
@@ -34,14 +35,16 @@ class UserController
 
             // Validate the required fields.
             if (empty($name) || empty($surname) || empty($email) || empty($password) || empty($confirmPassword)) {
-                echo 'Name, surname, email, password, and confirm password are mandatory fields.';
-                return;
+                FlashMessageHelper::setFlashMessage('error', 'Name, surname, email, password, and confirm password are mandatory fields.');
+                header('Location: /register');
+                exit;
             }
 
             // Validate password and confirm password match.
             if ($password !== $confirmPassword) {
-                echo 'Password and confirm password do not match.';
-                return;
+                FlashMessageHelper::setFlashMessage('error', 'Password and confirm password do not match.');
+                header('Location: /register');
+                exit;
             }
 
             // Hash the password.
@@ -57,6 +60,7 @@ class UserController
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/../partials/flash-message.php';
         // Render the view to register a new user.
         include __DIR__ . '/../templates/user/register.php';
         include __DIR__ . '/../templates/footer.php';
@@ -84,15 +88,16 @@ class UserController
                 $_SESSION['user'] = $user;
 
                 header('Location: /');
-                exit;
             } else {
-                echo 'Invalid email or password.';
-                return;
+                FlashMessageHelper::setFlashMessage('error', 'Invalid email or password.');
+                header('Location: /login');
             }
+            exit;
         }
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/../partials/flash-message.php';
         // Render the view to log in the user.
         include __DIR__ . '/../templates/user/login.php';
         include __DIR__ . '/../templates/footer.php';
@@ -102,8 +107,8 @@ class UserController
     {
         // Check if the user is logged in.
         if (!isset($_SESSION['user'])) {
-            echo 'You must be logged in to edit your contact information.';
-            return;
+            header('Location: /4o4');
+            exit;
         }
 
         // Get the logged-in user's ID.
