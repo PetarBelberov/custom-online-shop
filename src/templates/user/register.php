@@ -24,3 +24,5 @@
 
     <button type="submit">Register</button>
 </form>
+
+<p>Already have an account? <a href="/login">Log in</a></p>

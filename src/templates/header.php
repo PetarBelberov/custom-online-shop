@@ -11,10 +11,15 @@
                             <li>
                                 <p>Hello, <?php echo $user['name']; ?>!</p>
                             </li>
-                        <?php else: ?>
                             <li>
-                                <a href="/login">Log In</a>
+                                <a href="/logout">Logout</a>
                             </li>
+                        <?php else: ?>
+                            <?php if (!isset($hideLoginOption)): ?>
+                                <li>
+                                    <a href="/login">Log In</a>
+                                </li>
+                            <?php endif; ?>
                         <?php endif; ?>
                         <li>
                             <a href="/">Home</a>

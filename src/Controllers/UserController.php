@@ -57,6 +57,7 @@ class UserController
             header('Location: /login');
             exit;
         }
+        $hideLoginOption = isset($user);
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
@@ -94,6 +95,7 @@ class UserController
             }
             exit;
         }
+        $hideLoginOption = isset($user);
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
@@ -136,6 +138,7 @@ class UserController
 
         // Get the current contact information of the user.
         $user = $this->userModel->getUserById($userId);
+        $hideLoginOption = isset($user);
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
@@ -154,6 +157,7 @@ class UserController
 
         // Unset the editContactSuccess session variable.
         unset($_SESSION['editContactSuccess']);
+        $hideLoginOption = isset($user);
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';

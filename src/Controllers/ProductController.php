@@ -56,6 +56,9 @@ class ProductController
             header('Location: /create-product-success');
             exit;
         }
+        $hideLoginOption = isset($user);
+        // Get the user's name.
+        $user = $_SESSION['user'];
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
@@ -75,6 +78,8 @@ class ProductController
 
         // Unset the editContactSuccess session variable.
         unset($_SESSION['createProductSuccess']);
+        $hideLoginOption = isset($user);
+        $user = $_SESSION['user'];
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
@@ -181,6 +186,8 @@ class ProductController
             header('Location: /edit-product-success');
             exit;
         }
+        $hideLoginOption = isset($user);
+        $user = $_SESSION['user'];
 
         include __DIR__ . '/../templates/header.php';
         include __DIR__ . '/../partials/flash-message.php';
@@ -199,6 +206,8 @@ class ProductController
 
         // Unset the editContactSuccess session variable.
         unset($_SESSION['editProductSuccess']);
+        $hideLoginOption = isset($user);
+        $user = $_SESSION['user'];
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
@@ -314,6 +323,8 @@ class ProductController
                 header('Location: /404');
                 exit;
             }
+            $hideLoginOption = isset($user);
+            $user = $_SESSION['user'];
 
             // Render the view with the header and footer included.
             include __DIR__ . '/../templates/header.php';
@@ -333,6 +344,8 @@ class ProductController
             header('Location: /404');
             exit;
         }
+        $hideLoginOption = isset($user);
+        $user = $_SESSION['user'];
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
@@ -348,9 +361,11 @@ class ProductController
             header('Location: /');
             exit;
         }
+        $hideLoginOption = isset($user);
 
         // Unset the editContactSuccess session variable.
         unset($_SESSION['deleteProductSuccess']);
+        $user = $_SESSION['user'];
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';

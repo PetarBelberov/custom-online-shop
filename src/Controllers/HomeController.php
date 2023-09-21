@@ -33,6 +33,14 @@ class HomeController
 
     public function error404(): void
     {
+        // Check if the user is logged in.
+        if (isset($_SESSION['user'])) {
+            // Get the user's name.
+            $user = $_SESSION['user'];
+        }
+
+        $hideLoginOption = isset($user);
+
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
         // Render the 404 error page.
