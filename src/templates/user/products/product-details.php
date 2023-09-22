@@ -21,6 +21,12 @@
         <?php else: ?>
             <p>No images available for this product.</p>
         <?php endif; ?>
+        <?php if (isset($user) && $user['id'] === $product['user_id']): ?>
+            <div>
+                <a href="/edit-product?id=<?php echo $product['id']; ?>">Edit Product</a>
+                <a href="/delete-product-confirm?id=<?php echo $product['id']; ?>">Delete Product</a>
+            </div>
+        <?php endif; ?>
     </div>
 <?php else: ?>
     <p>No product or user found.</p>
