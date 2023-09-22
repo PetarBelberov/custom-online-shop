@@ -20,7 +20,7 @@ $productModel = (!empty($pdo) ? new Product($pdo) : null);
 
 // Create an instance of the Controllers\UserController and pass the PDO object if it exists.
 $userController = (!empty($pdo) ? new UserController(new User($pdo)) : null);
-$productController = (!empty($productModel) ? new ProductController($productModel) : null);
+$productController = (!empty($productModel) ? new ProductController($productModel, $userModel) : null);
 $homeController = (!empty($userModel) ? new HomeController($productModel) : null);
 
 // Get the product ID from the request query parameters.
@@ -82,6 +82,17 @@ $routes = [
     },
     '/delete-product-success' => function () use ($productController) {
         $productController->deleteProductSuccess();
+    },
+    '/product-details?id=' . $productId => function () use ($productController, $productId) {
+        // Check if the product ID is provided.
+        if (!$productId) {
+            FlashMessageHelper::setFlashMessage('error', 'Product is missing.');
+            header('Location: /');
+            exit;
+        }
+
+        // Call the showProductDetails() method with the product ID.
+        $productController->showProductDetails($productId);
     },
     '/logout' => function () use ($userController) {
         $userController->logout();

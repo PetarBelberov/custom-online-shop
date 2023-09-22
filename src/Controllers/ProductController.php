@@ -3,14 +3,46 @@ namespace Controllers;
 
 use Helpers\FlashMessageHelper;
 use Models\Product;
+use Models\User;
 
 class ProductController
 {
     private Product $productModel;
+    private User $userModel;
 
-    public function __construct(Product $productModel)
+    public function __construct(Product $productModel, User $userModel)
     {
         $this->productModel = $productModel;
+        $this->userModel = $userModel;
+    }
+
+    public function showProductDetails($productId): void
+    {
+        // Get the product details from the database.
+        $product = $this->productModel->getProductById($productId);
+
+        // Check if the product exists.
+        if (!$product) {
+            header('Location: /404');
+            exit;
+        }
+
+        // Get the user who created the product.
+        $userId = $product['user_id'];
+        $user = $this->userModel->getUserById($userId);
+
+        // Get the image paths from the product.
+        $imagePaths = json_decode($product['image_path'], true);
+
+        $imagePaths = array_map(function ($imagePath) {
+            return '/assets/images/' . $imagePath;
+        }, $imagePaths);
+
+        // Render the view with the header and footer included.
+        include __DIR__ . '/../templates/header.php';
+        // Render the view for the product details page.
+        include __DIR__ . '/../templates/user/products/product-details.php';
+        include __DIR__ . '/../templates/footer.php';
     }
 
     public function createProduct(): void
