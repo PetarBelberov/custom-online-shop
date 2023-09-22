@@ -19,7 +19,7 @@ class UserController
         // Check if the user is already logged in.
         if (isset($_SESSION['user'])) {
             // Redirect to the home page.
-            header('Location: /');
+            header('Location: /404');
             exit;
         }
 
@@ -72,7 +72,7 @@ class UserController
         // Check if the user is already logged in.
         if (isset($_SESSION['user'])) {
             // Redirect to the home page.
-            header('Location: /');
+            header('Location: /404');
             exit;
         }
 
@@ -151,7 +151,7 @@ class UserController
     {
         // Check if the editContactSuccess session variable is set to true.
         if (!isset($_SESSION['editContactSuccess']) || !$_SESSION['editContactSuccess']) {
-            header('Location: /');
+            header('Location: /404');
             exit;
         }
 

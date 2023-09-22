@@ -11,7 +11,6 @@ use Controllers\ProductController;
 use Controllers\HomeController;
 use Models\Product;
 use Models\User;
-use Helpers\FlashMessageHelper;
 
 // Create an instances of the User and Product models.
 $userModel = (!empty($pdo) ? new User($pdo) : null);
@@ -46,35 +45,13 @@ $routes = [
     '/create-product' => function () use ($productController) {
         $productController->createProduct();
     },
-    '/create-product-success' => function () use ($productController) {
-        $productController->createProductSuccess();
-    },
-    '/product-created' => function () use ($productController) {
-        include '../src/templates/user/products/create-product-success.php';
-    },
     '/edit-product?id=' . $productId => function () use ($productController) {
-        // Check if the product ID is provided.
-        if (!$_GET['id']) {
-            FlashMessageHelper::setFlashMessage('error', 'Product ID is missing.');
-            header('Location: /');
-            exit;
-        }
-
-        // Call the editProduct() method with the product ID.
         $productController->editProduct();
     },
     '/edit-product-success' => function () use ($productController) {
         $productController->editProductSuccess();
     },
     '/delete-product-confirm?id=' . $productId => function () use ($productController, $productId) {
-        // Check if the product ID is provided.
-        if (!$productId) {
-            FlashMessageHelper::setFlashMessage('error', 'Product ID is missing.');
-            header('Location: /');
-            exit;
-        }
-
-        // Call the deleteProductConfirm() method with the product ID.
         $productController->deleteProductConfirm($productId);
     },
     '/delete-product' => function () use ($productController) {
@@ -84,14 +61,6 @@ $routes = [
         $productController->deleteProductSuccess();
     },
     '/product-details?id=' . $productId => function () use ($productController, $productId) {
-        // Check if the product ID is provided.
-        if (!$productId) {
-            FlashMessageHelper::setFlashMessage('error', 'Product is missing.');
-            header('Location: /');
-            exit;
-        }
-
-        // Call the showProductDetails() method with the product ID.
         $productController->showProductDetails($productId);
     },
     '/logout' => function () use ($userController) {

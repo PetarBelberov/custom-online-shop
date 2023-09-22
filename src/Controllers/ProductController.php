@@ -29,7 +29,10 @@ class ProductController
 
         // Get the user who created the product.
         $userId = $product['user_id'];
-        $user = $this->userModel->getUserById($userId);
+        $userDetails = $this->userModel->getUserById($userId);
+
+        // Get the user's name.
+        $user = $_SESSION['user'] ?? null;
 
         // Get the image paths from the product.
         $imagePaths = json_decode($product['image_path'], true);
@@ -49,8 +52,7 @@ class ProductController
     {
         // Check if the user is logged in.
         if (!isset($_SESSION['user'])) {
-            FlashMessageHelper::setFlashMessage('error', 'You must be logged in to create a product.');
-            header('Location: /');
+            header('Location: /404');
             exit;
         }
 
@@ -81,11 +83,8 @@ class ProductController
             $productImagesNames = $this->handleProductImages($productImages);
             $this->productModel->saveProduct($userId, $productName, $productDescription, $productPublicationDate, $productImagesNames);
 
-            // Set a session variable to indicate the success status.
-            $_SESSION['createProductSuccess'] = true;
-
-            // Redirect to a different page to prevent form resubmission.
-            header('Location: /create-product-success');
+            FlashMessageHelper::setFlashMessage('success', 'Your product has been created successfully.');
+            header('Location: /create-product');
             exit;
         }
         $hideLoginOption = isset($user);
@@ -100,32 +99,11 @@ class ProductController
         include __DIR__ . '/../templates/footer.php';
     }
 
-    public function createProductSuccess(): void
-    {
-        // Check if the editContactSuccess session variable is set to true.
-        if (!isset($_SESSION['createProductSuccess']) || !$_SESSION['createProductSuccess']) {
-            header('Location: /');
-            exit;
-        }
-
-        // Unset the editContactSuccess session variable.
-        unset($_SESSION['createProductSuccess']);
-        $hideLoginOption = isset($user);
-        $user = $_SESSION['user'];
-
-        // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
-        // Render the view for the edit contact success page.
-        include __DIR__ . '/../templates/user/products/create-product-success.php';
-        include __DIR__ . '/../templates/footer.php';
-    }
-
     public function editProduct(): void
     {
         // Check if the user is logged in.
         if (!isset($_SESSION['user'])) {
-            FlashMessageHelper::setFlashMessage('error', 'You must be logged in to edit a product.');
-            header('Location: /');
+            header('Location: /404');
             exit;
         }
 
@@ -134,13 +112,6 @@ class ProductController
 
         // Get the product ID from the request.
         $productId = $_GET['id'] ?? null;
-
-        // Check if the product ID is provided.
-        if (!$productId) {
-            FlashMessageHelper::setFlashMessage('error', 'Product ID is missing.');
-            header('Location: /');
-            exit;
-        }
 
         // Get the product details from the database.
         $product = $this->productModel->getProductById($productId);
@@ -232,7 +203,7 @@ class ProductController
     {
         // Check if the editContactSuccess session variable is set to true.
         if (!isset($_SESSION['editProductSuccess']) || !$_SESSION['editProductSuccess']) {
-            header('Location: /');
+            header('Location: /404');
             exit;
         }
 
@@ -291,8 +262,7 @@ class ProductController
     {
         // Check if the user is logged in.
         if (!isset($_SESSION['user'])) {
-            FlashMessageHelper::setFlashMessage('error', 'You must be logged in to delete a product.');
-            header('Location: /');
+            header('Location: /404');
             exit;
         }
 
@@ -308,8 +278,7 @@ class ProductController
 
             // Check if the product ID is provided.
             if (!$productId) {
-                FlashMessageHelper::setFlashMessage('error', 'Product ID is missing.');
-                header('Location: /');
+                header('Location: /404');
                 exit;
             }
 
@@ -342,8 +311,7 @@ class ProductController
 
             // Check if the product ID is provided.
             if (!$productId) {
-                FlashMessageHelper::setFlashMessage('error', 'Product ID is missing.');
-                header('Location: /');
+                header('Location: /404');
                 exit;
             }
 
@@ -370,14 +338,14 @@ class ProductController
     {
         // Get the product details from the database.
         $product = $this->productModel->getProductById($productId);
+        $user = $_SESSION['user'] ?? null;
 
         // Check if the product exists.
-        if (!$product) {
+        if (!$product || !$user) {
             header('Location: /404');
             exit;
         }
         $hideLoginOption = isset($user);
-        $user = $_SESSION['user'];
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
@@ -390,7 +358,7 @@ class ProductController
     {
         // Check if the editContactSuccess session variable is set to true.
         if (!isset($_SESSION['deleteProductSuccess']) || !$_SESSION['deleteProductSuccess']) {
-            header('Location: /');
+            header('Location: /404');
             exit;
         }
         $hideLoginOption = isset($user);
