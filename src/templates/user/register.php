@@ -1,28 +1,77 @@
-<h2>Register</h2>
+<!--<h2>Register</h2>-->
+<!---->
+<!--<form action="/register" method="POST">-->
+<!--    <label for="name">Name:</label>-->
+<!--    <input type="text" name="name" required>-->
+<!---->
+<!--    <label for="surname">Surname:</label>-->
+<!--    <input type="text" name="surname" required>-->
+<!---->
+<!--    <label for="email">Email:</label>-->
+<!--    <input type="email" name="email" required>-->
+<!---->
+<!--    <label for="phone">Phone:</label>-->
+<!--    <input type="text" name="phone">-->
+<!---->
+<!--    <label for="city">City:</label>-->
+<!--    <input type="text" name="city">-->
+<!---->
+<!--    <label for="password">Password:</label>-->
+<!--    <input type="password" name="password" required>-->
+<!---->
+<!--    <label for="confirm_password">Confirm Password:</label>-->
+<!--    <input type="password" name="confirm_password" required>-->
+<!---->
+<!--    <button type="submit">Register</button>-->
+<!--</form>-->
+<!---->
+<!--<p>Already have an account? <a href="/login">Log in</a></p>-->
 
-<form action="/register" method="POST">
-    <label for="name">Name:</label>
-    <input type="text" name="name" required>
+<!--Register-->
+<div class="form">
+    <h2>Register</h2>
+    <form action="/register" method="POST">
 
-    <label for="surname">Surname:</label>
-    <input type="text" name="surname" required>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="name_register_form">Name</label>
+            <input type="text" placeholder="Name" name="name" id="name_register_form" class="form-control" required/>
+        </div>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" required>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="surname_register_form">Surname</label>
+            <input type="text" placeholder="Surname" name="surname" id="surname_register_form" class="form-control" />
+        </div>
 
-    <label for="phone">Phone:</label>
-    <input type="text" name="phone">
+        <div class="form-outline mb-4">
+            <label class="form-label" for="email_register_form">Email address</label>
+            <input type="email" placeholder="Email address" name="email" id="email_register_form" class="form-control" />
+        </div>
 
-    <label for="city">City:</label>
-    <input type="text" name="city">
+        <div class="form-outline mb-4">
+            <label class="form-label" for="phone_register_form">Phone</label>
+            <input type="text" placeholder="Phone" name="phone" id="phone_register_form" class="form-control" />
+        </div>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" required>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="city_register_form">City</label>
+            <input type="text" placeholder="City" name="city" id="city_register_form" class="form-control" />
+        </div>
 
-    <label for="confirm_password">Confirm Password:</label>
-    <input type="password" name="confirm_password" required>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="password_register_form">Password</label>
+            <input type="password" placeholder="Password" name="password" id="password_register_form" class="form-control" />
+        </div>
 
-    <button type="submit">Register</button>
-</form>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="confirm_password_register_form">Confirm password</label>
+            <input type="password" placeholder="Confirm Password" name="confirm_password" id="confirm_password" class="form-control" />
+        </div>
 
-<p>Already have an account? <a href="/login">Log in</a></p>
+        <!-- Submit button -->
+        <button type="submit" id="button" class="btn btn-primary btn-block mb-4">Register</button>
+
+        <div class="text-center">
+            <p>Already have an account? <a href="/login">Register</a></p>
+        </div>
+    </form>
+</div>

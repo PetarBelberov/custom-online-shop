@@ -1,13 +1,24 @@
-<h2>Login</h2>
+<div class="form">
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <input type="email" name="email" id="form2Example1" class="form-control" />
+            <label class="form-label">Email address</label>
+        </div>
 
-<form action="/login" method="POST">
-    <label for="email">Email:</label>
-    <input type="email" name="email" required>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <input type="password" name="password" id="form2Example2" class="form-control" />
+            <label class="form-label">Password</label>
+        </div>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" required>
+        <!-- Submit button -->
+        <button type="submit" id="button" class="btn btn-primary btn-block mb-4">Sign in</button>
 
-    <button type="submit">Login</button>
-</form>
-
-<p>Don't have an account? <a href="/register">Register</a></p>
+        <!-- Register buttons -->
+        <div class="text-center">
+            <p>Not a member? <a href="/register">Register</a></p>
+        </div>
+    </form>
+</div>

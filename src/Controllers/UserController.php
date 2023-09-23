@@ -53,7 +53,7 @@ class UserController
             // Insert the new user into the database.
             $this->userModel->setUser($name, $surname, $email, $phone, $city, $hashedPassword);
 
-            // Redirect to the login page.
+            FlashMessageHelper::setFlashMessage('success', 'Registration successful! You can now log in.');            // Redirect to the login page.
             header('Location: /login');
             exit;
         }
