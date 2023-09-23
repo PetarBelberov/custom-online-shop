@@ -25,13 +25,13 @@ class UserController
 
         // Handle the form submission to register a new user.
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name = $_POST['name'];
-            $surname = $_POST['surname'];
-            $email = $_POST['email'];
-            $phone = $_POST['phone'];
-            $city = $_POST['city'];
-            $password = $_POST['password'];
-            $confirmPassword = $_POST['confirm_password'];
+            $name = htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8');
+            $surname = htmlspecialchars($_POST['surname'], ENT_QUOTES, 'UTF-8');
+            $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
+            $phone = htmlspecialchars($_POST['phone'], ENT_QUOTES, 'UTF-8');
+            $city = htmlspecialchars($_POST['city'], ENT_QUOTES, 'UTF-8');
+            $password = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
+            $confirmPassword = htmlspecialchars($_POST['confirm_password'], ENT_QUOTES, 'UTF-8');
 
             // Validate the required fields.
             if (empty($name) || empty($surname) || empty($email) || empty($password) || empty($confirmPassword)) {
@@ -78,8 +78,8 @@ class UserController
 
         // Handle the form submission to log in the user.
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+            $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
+            $password = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
 
             // Validate the user's credentials.
             $user = $this->userModel->getUserByEmail($email);
@@ -119,11 +119,11 @@ class UserController
         // Handle the form submission to edit contact information.
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Get the form data
-            $name = $_POST['name'];
-            $surname = $_POST['surname'];
-            $email = $_POST['email'];
-            $phone = $_POST['phone'];
-            $city = $_POST['city'];
+            $name = htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8');
+            $surname = htmlspecialchars($_POST['surname'], ENT_QUOTES, 'UTF-8');
+            $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
+            $phone = htmlspecialchars($_POST['phone'], ENT_QUOTES, 'UTF-8');
+            $city = htmlspecialchars($_POST['city'], ENT_QUOTES, 'UTF-8');
 
             // Update the contact information in the database.
             $this->userModel->updateContactInformation($userId, $name, $surname, $email, $phone, $city);

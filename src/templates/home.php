@@ -33,7 +33,7 @@
                         <div class="card-body">
                             <h5 class="card-title">No products available</h5>
                             <p class="card-text">Start by adding your first product.</p>
-                            <?php if (isset($_SESSION['user_id'])): ?>
+                            <?php if (isset($_SESSION['user'])): ?>
                                 <a href="/create-product" class="btn btn-primary">Add Product</a>
                             <?php endif; ?>
                         </div>

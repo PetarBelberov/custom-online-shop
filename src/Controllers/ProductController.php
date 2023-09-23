@@ -62,9 +62,9 @@ class ProductController
         // Handle the form submission to create a product.
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Get the form data.
-            $productName = $_POST['product_name'];
-            $productDescription = $_POST['product_description'];
-            $productPublicationDate = $_POST['product_publication_date'];
+            $productName = htmlspecialchars($_POST['product_name'], ENT_QUOTES, 'UTF-8');
+            $productDescription = htmlspecialchars($_POST['product_description'], ENT_QUOTES, 'UTF-8');
+            $productPublicationDate = htmlspecialchars($_POST['product_publication_date'], ENT_QUOTES, 'UTF-8');
             // Handle single or multiple images.
             $productImages = $_FILES['product_images'];
             $uploadedImagesLength = strlen($productImages['name'][0]);
@@ -111,8 +111,11 @@ class ProductController
         $userId = $_SESSION['user']['id'];
 
         // Get the product ID from the request.
-        $productId = $_GET['id'] ?? null;
+        $productId = null;
 
+        if (isset($_GET['id'])) {
+            $productId = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
+        }
         // Get the product details from the database.
         $product = $this->productModel->getProductById($productId);
 
@@ -125,9 +128,9 @@ class ProductController
         // Handle the form submission to update the product.
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Get the form data.
-            $productName = $_POST['product_name'];
-            $productDescription = $_POST['product_description'];
-            $productPublicationDate = $_POST['product_publication_date'];
+            $productName = htmlspecialchars($_POST['product_name'], ENT_QUOTES, 'UTF-8');
+            $productDescription = htmlspecialchars($_POST['product_description'], ENT_QUOTES, 'UTF-8');
+            $productPublicationDate = htmlspecialchars($_POST['product_publication_date'], ENT_QUOTES, 'UTF-8');
             // Handle single or multiple images.
             $productImages = $_FILES['product_images'];
             $uploadedImagesLength = strlen($productImages['name'][0]);
@@ -273,10 +276,10 @@ class ProductController
 
         // Check if the confirmation form is submitted.
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
-            $confirm = $_POST['confirm'];
+            $confirm = htmlspecialchars($_POST['confirm'], ENT_QUOTES, 'UTF-8');
 
             // Get the product ID from the request.
-            $productId = $_POST['product_id'] ?? null;
+            $productId = htmlspecialchars($_POST['product_id'], ENT_QUOTES, 'UTF-8') ?? null;
 
             // Check if the product ID is provided.
             if (!$productId) {
@@ -309,7 +312,11 @@ class ProductController
             exit;
         } else {
             // Get the product ID from the request.
-            $productId = $_GET['id'] ?? null;
+            $productId = null;
+
+            if (isset($_GET['id'])) {
+                $productId = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
+            }
 
             // Check if the product ID is provided.
             if (!$productId) {

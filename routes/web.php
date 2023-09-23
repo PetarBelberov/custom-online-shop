@@ -21,9 +21,12 @@ $productModel = (!empty($pdo) ? new Product($pdo) : null);
 $userController = (!empty($pdo) ? new UserController(new User($pdo)) : null);
 $productController = (!empty($productModel) ? new ProductController($productModel, $userModel) : null);
 $homeController = (!empty($userModel) ? new HomeController($productModel) : null);
+$productId = null;
 
 // Get the product ID from the request query parameters.
-$productId = $_GET['id'] ?? null;
+if (isset($_GET['id'])) {
+    $productId = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
+}
 
 // Define the routes and their actions.
 $routes = [
