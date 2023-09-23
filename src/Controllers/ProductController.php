@@ -138,13 +138,6 @@ class ProductController
             // Remove the keys from the existing images array.
             $existingImages = array_values($existingImages);
 
-            // Check if there is only one image left and no new images were uploaded.
-            if (count($existingImages) === 1 && empty($_FILES['product_images']['name'][0])) {
-                FlashMessageHelper::setFlashMessage('error', 'Cannot delete the last image. A product must have at least one image.');
-                header('Location: /edit-product?id=' . $productId);
-                exit;
-            }
-
             // Validate the required fields.
             if (empty($productName) ||
                 empty($productDescription) ||
@@ -170,13 +163,22 @@ class ProductController
             // Remove selected images from the database.
             if (isset($_POST['remove_images'])) {
                 $selectedImages = $_POST['remove_images'];
-                foreach ($selectedImages as $selectedImage) {
-                    // Remove the selected image from the array of image names.
-                    $key = array_search($selectedImage, $productImagesNames);
-                    if ($key !== false) {
-                        unset($productImagesNames[$key]);
+                $remainingImages = [];
+
+                foreach ($productImagesNames as $image) {
+                    if (!in_array($image, $selectedImages)) {
+                        $remainingImages[] = $image;
                     }
                 }
+
+                // Check if there is only one image left and no new images were uploaded.
+                if (empty($remainingImages) && empty($_FILES['product_images']['name'][0])) {
+                    FlashMessageHelper::setFlashMessage('error', 'Cannot delete the last image. A product must have at least one image.');
+                    header('Location: /edit-product?id=' . $productId);
+                    exit;
+                }
+
+                $productImagesNames = $remainingImages;
             }
 
             // Save the updated product details to the database.

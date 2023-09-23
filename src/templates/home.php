@@ -2,8 +2,8 @@
     <?php if (isset($products)): ?>
         <h1>INDEAVR Online Shop</h1>
         <?php foreach ($products as $product): ?>
-            <div class="container py-5">
-                <div class="row justify-content-center mb-3">
+            <div class="container py-1">
+                <div class="row justify-content-center mb-1">
                     <div class="col-md-6 col-xl-6">
                         <div class="card">
                             <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
