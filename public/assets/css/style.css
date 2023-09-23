@@ -20,7 +20,7 @@ html {
 }
 
 body {
-    /*min-height: 100vh;*/
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     /*margin-bottom: 5rem;*/
@@ -320,6 +320,23 @@ nav {
 /* Edit Product Page */
 #image_preview_container li{
     list-style-type: none;
+}
+
+/* Flash message */
+.flash-message {
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.error {
+    background-color: red;
+    color: white;
+}
+
+.success {
+    background-color: green;
+    color: white;
 }
 
 /* Footer */

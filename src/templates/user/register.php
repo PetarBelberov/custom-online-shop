@@ -41,7 +41,7 @@
         <button type="submit" id="button" class="btn btn-primary btn-block mb-4">Register</button>
 
         <div class="text-center">
-            <p>Already have an account? <a href="/login">Register</a></p>
+            <p>Already have an account? <a href="/login">Login</a></p>
         </div>
     </form>
 </div>

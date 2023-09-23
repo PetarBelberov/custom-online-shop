@@ -2,7 +2,6 @@
     <div class="form">
         <h2>Edit Product</h2>
         <form action="/edit-product?id=<?php echo $product['id']; ?>" method="POST" enctype="multipart/form-data">
-
             <div class="form-outline mb-4">
                 <label class="form-label" for="product_name">Product Name</label>
                 <input type="text" name="product_name" id="product_name" class="form-control" value="<?php echo $product['name']; ?>" required/>

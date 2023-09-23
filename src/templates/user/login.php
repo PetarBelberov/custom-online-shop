@@ -3,14 +3,14 @@
     <form action="/login" method="POST">
         <!-- Email input -->
         <div class="form-outline mb-4">
-            <input type="email" name="email" id="form2Example1" class="form-control" />
             <label class="form-label">Email address</label>
+            <input type="email" name="email" id="form2Example1" class="form-control" />
         </div>
 
         <!-- Password input -->
         <div class="form-outline mb-4">
-            <input type="password" name="password" id="form2Example2" class="form-control" />
             <label class="form-label">Password</label>
+            <input type="password" name="password" id="form2Example2" class="form-control" />
         </div>
 
         <!-- Submit button -->

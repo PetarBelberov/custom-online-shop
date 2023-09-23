@@ -10,4 +10,8 @@ class FlashMessageHelper
             'message' => $message
         ];
     }
+    public static function getFlashMessageType(): string
+    {
+        return $_SESSION['flash_message']['type'] ?? '';
+    }
 }
