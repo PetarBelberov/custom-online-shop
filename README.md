@@ -2,7 +2,7 @@
 
 ## Installation
 
-I have used for the local development Vagrant/Homestead. The app was hosted on a Nginx web server running and active on the Homestead virtual machine. First you need clone the project repository from your version control system to your local machine. To run the project you need to set up a local development environment(Vagrant, Homestead, Docker, XAMPP) and execute the database.sql file to create the DB. Configure the files based on your local environment. Then you can start the project on your local machine and start using it."
+I have used for the local development Vagrant/Homestead. The app was hosted on a Nginx web server running and active on the Homestead virtual machine. First you need clone the project repository from your version control system to your local machine. To run the project you need to set up a local development environment(Vagrant, Homestead, Docker, XAMPP) and execute the database.sql file to create the DB. Configure the files based on your local environment. Then you can start the project on your local machine and start using it.
 
 ## Project Structure
 
