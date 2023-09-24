@@ -6,7 +6,7 @@ I have used for the local development Vagrant/Homestead. The app was hosted on a
 
 ## Project Structure
 
-Explain the structure of your project, including the main directories and files.
+Explain the structure of the project, including the main directories and files.
 
 - **config/database.php**: This file contains the database credentials and creates a new PDO instance to establish a connection to the database.
 
