@@ -33,7 +33,7 @@ $routes = [
     '/' => function () use ($homeController) {
         $homeController->home();
     },
-    '/register' => function () use ($userController) {
+    '/public/register' => function () use ($userController) {
         $userController->register();
     },
     '/login' => function () use ($userController) {
