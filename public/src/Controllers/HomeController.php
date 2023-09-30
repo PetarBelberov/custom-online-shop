@@ -27,8 +27,8 @@ class HomeController
         include __DIR__ . '/../templates/header.php';
         include __DIR__ . '/../partials/flash-message.php';
         // Render the view for the home page with the user's name.
-        include __DIR__ . '/../templates/home.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/home.php';
+        include __DIR__ . '/templates/footer.php';
     }
 
     public function error404(): void
