@@ -5,5 +5,8 @@
       "Controllers\\": "public/src/Controllers/",
       "Helpers\\": "public/src/helpers/"
     }
+  },
+  "require": {
+    "ext-pdo": "*"
   }
 }
