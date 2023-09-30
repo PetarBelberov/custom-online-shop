@@ -42,10 +42,10 @@ class ProductController
         }, $imagePaths);
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/templates/header.php';
         // Render the view for the product details page.
-        include __DIR__ . '/../templates/user/products/product-details.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/user/products/product-details.php';
+        include __DIR__ . '/templates/footer.php';
     }
 
     public function createProduct(): void
@@ -92,11 +92,11 @@ class ProductController
         $user = $_SESSION['user'];
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
-        include __DIR__ . '/../partials/flash-message.php';
+        include __DIR__ . '/templates/header.php';
+        include __DIR__ . '/partials/flash-message.php';
         // Render the view to create a product.
-        include __DIR__ . '/../templates/user/products/create-product.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/user/products/create-product.php';
+        include __DIR__ . '/templates/footer.php';
     }
 
     public function editProduct(): void
@@ -197,11 +197,11 @@ class ProductController
         $hideLoginOption = isset($user);
         $user = $_SESSION['user'];
 
-        include __DIR__ . '/../templates/header.php';
-        include __DIR__ . '/../partials/flash-message.php';
+        include __DIR__ . '/templates/header.php';
+        include __DIR__ . '/partials/flash-message.php';
         // Render the view to edit the product.
-        include __DIR__ . '/../templates/user/products/edit-product.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/user/products/edit-product.php';
+        include __DIR__ . '/templates/footer.php';
     }
 
     public function editProductSuccess(): void
@@ -218,10 +218,10 @@ class ProductController
         $user = $_SESSION['user'];
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/templates/header.php';
         // Render the view for the edit contact success page.
-        include __DIR__ . '/../templates/user/products/edit-product-success.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/user/products/edit-product-success.php';
+        include __DIR__ . '/templates/footer.php';
 
     }
 
@@ -336,10 +336,10 @@ class ProductController
             $user = $_SESSION['user'];
 
             // Render the view with the header and footer included.
-            include __DIR__ . '/../templates/header.php';
+            include __DIR__ . '/templates/header.php';
             // Render the confirmation view.
-            include __DIR__ . '/../templates/user/products/delete-product-confirm.php';
-            include __DIR__ . '/../templates/footer.php';
+            include __DIR__ . '/templates/user/products/delete-product-confirm.php';
+            include __DIR__ . '/templates/footer.php';
         }
     }
 
@@ -357,10 +357,10 @@ class ProductController
         $hideLoginOption = isset($user);
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/templates/header.php';
         // Render the confirmation view.
-        include __DIR__ . '/../templates/user/products/delete-product-confirm.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/user/products/delete-product-confirm.php';
+        include __DIR__ . '/templates/footer.php';
     }
 
     public function deleteProductSuccess(): void
@@ -377,9 +377,9 @@ class ProductController
         $user = $_SESSION['user'];
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/templates/header.php';
         // Render the view for the edit contact success page.
-        include __DIR__ . '/../templates/user/products/delete-product-success.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/user/products/delete-product-success.php';
+        include __DIR__ . '/templates/footer.php';
     }
 }

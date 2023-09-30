@@ -60,11 +60,11 @@ class UserController
         $hideLoginOption = isset($user);
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
-        include __DIR__ . '/../partials/flash-message.php';
+        include __DIR__ . '/templates/header.php';
+        include __DIR__ . '/partials/flash-message.php';
         // Render the view to register a new user.
-        include __DIR__ . '/../templates/user/register.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/user/register.php';
+        include __DIR__ . '/templates/footer.php';
     }
 
     public function login(): void
@@ -98,11 +98,11 @@ class UserController
         $hideLoginOption = isset($user);
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
-        include __DIR__ . '/../partials/flash-message.php';
+        include __DIR__ . '/templates/header.php';
+        include __DIR__ . '/partials/flash-message.php';
         // Render the view to log in the user.
-        include __DIR__ . '/../templates/user/login.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/user/login.php';
+        include __DIR__ . '/templates/footer.php';
     }
 
     public function editContactInformation(): void
@@ -141,10 +141,10 @@ class UserController
         $hideLoginOption = isset($user);
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/templates/header.php';
         // Render the view to edit contact information.
-        include __DIR__ . '/../templates/user/edit-contact.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/user/edit-contact.php';
+        include __DIR__ . '/templates/footer.php';
     }
 
     public function editContactSuccess(): void
@@ -160,10 +160,10 @@ class UserController
         $hideLoginOption = isset($user);
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/templates/header.php';
         // Render the view for the edit contact success page.
-        include __DIR__ . '/../templates/user/edit-contact-success.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/user/edit-contact-success.php';
+        include __DIR__ . '/templates/footer.php';
     }
 
     #[NoReturn] public function logout(): void

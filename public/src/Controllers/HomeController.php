@@ -24,11 +24,11 @@ class HomeController
         $products = $this->productModel->getAllProducts();
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
-        include __DIR__ . '/../partials/flash-message.php';
+        include __DIR__ . '/templates/header.php';
+        include __DIR__ . '/partials/flash-message.php';
         // Render the view for the home page with the user's name.
-        include __DIR__ . '/../templates/home.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/home.php';
+        include __DIR__ . '/templates/footer.php';
     }
 
     public function error404(): void
@@ -42,9 +42,9 @@ class HomeController
         $hideLoginOption = isset($user);
 
         // Render the view with the header and footer included.
-        include __DIR__ . '/../templates/header.php';
+        include __DIR__ . '/templates/header.php';
         // Render the 404 error page.
-        include __DIR__ . '/../templates/error/404.php';
-        include __DIR__ . '/../templates/footer.php';
+        include __DIR__ . '/templates/error/404.php';
+        include __DIR__ . '/templates/footer.php';
     }
 }
