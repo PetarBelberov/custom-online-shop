@@ -5,7 +5,7 @@ spl_autoload_register(function ($className) {
     $prefixes = [
         'Models\\' => __DIR__ . '/src/Models/',
         'Controllers\\' => __DIR__ . '/src/Controllers/',
-        'Helpers\\' => __DIR__ . '/src/Helpers/'
+        'Helpers\\' => __DIR__ . '/src/helpers/'
     ];
 
     foreach ($prefixes as $prefix => $baseDir) {

@@ -93,7 +93,7 @@ class ProductController
 
         // Render the view with the header and footer included.
         include __DIR__ . '/../templates/header.php';
-        include __DIR__ . '/../partials/flash-message.php';
+//        include __DIR__ . '/../partials/flash-message.php';
         // Render the view to create a product.
         include __DIR__ . '/../templates/user/products/create-product.php';
         include __DIR__ . '/../templates/footer.php';
