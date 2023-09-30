@@ -24,20 +24,20 @@ class ComposerStaticInit0f7906b467983aa40fa2620ff994ad7f
     public static $prefixDirsPsr4 = array (
         'Models\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src/Models',
+            0 => __DIR__ . '/../..',
         ),
         'Helpers\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src/Helpers',
+            0 => __DIR__ . '/../..',
         ),
         'Controllers\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src/Controllers',
+            0 => __DIR__ . '/../..',
         ),
     );
 
     public static $classMap = array (
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..',
     );
 
     public static function getInitializer(ClassLoader $loader)
