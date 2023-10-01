@@ -13,10 +13,6 @@ try {
     if ($requestUri === '') {
         $requestUri = '/';
     }
-    if ($requestUri === '/register') {
-        var_dump("Register page");
-        die();
-    }
     if (isset($routes[$requestUri])) {
         $routes[$requestUri]();
     } else {

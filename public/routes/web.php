@@ -33,6 +33,10 @@ $routes = [
     '/' => function () use ($homeController) {
         $homeController->home();
     },
+    '/test' => function () use ($homeController) {
+        var_dump('echo');
+        die();
+    },
     '/register' => function () use ($userController) {
         $userController->register();
     },
