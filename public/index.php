@@ -13,7 +13,7 @@ try {
     if ($requestUri === '') {
         $requestUri = '/';
     }
-    if ($requestUri === 'register') {
+    if ($requestUri === '/register') {
         var_dump("Register page");
         die();
     }
