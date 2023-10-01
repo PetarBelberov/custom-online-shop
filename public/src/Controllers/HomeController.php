@@ -14,7 +14,6 @@ class HomeController
 
     public function home(): void
     {
-        var_dump("After home.");
         // Check if the user is logged in.
         if (isset($_SESSION['user'])) {
             // Get the user's name.

@@ -16,12 +16,13 @@ class UserController
 
     public function register(): void
     {
+        var_dump("Register page");
         // Check if the user is already logged in.
-        if (isset($_SESSION['user'])) {
-            // Redirect to the home page.
-            header('Location: /404');
-            exit;
-        }
+//        if (isset($_SESSION['user'])) {
+//            // Redirect to the home page.
+//            header('Location: /404');
+//            exit;
+//        }
 
         // Handle the form submission to register a new user.
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
