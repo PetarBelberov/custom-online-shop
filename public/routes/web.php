@@ -31,6 +31,7 @@ if (isset($_GET['id'])) {
 // Define the routes and their actions.
 $routes = [
     '/' => function () use ($homeController) {
+    var_dump("Beofre home");
         $homeController->home();
     },
     '/register' => function () use ($userController) {
