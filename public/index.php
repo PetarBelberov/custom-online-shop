@@ -9,6 +9,7 @@ require_once __DIR__ . '/routes/web.php';
 try {
     // Handle the request based on the URL.
     $requestUri = rtrim($_SERVER['REQUEST_URI'], '/');
+    var_dump($requestUri);
     // Home page.
     if ($requestUri === '') {
         $requestUri = '/';
